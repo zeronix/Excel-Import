@@ -204,7 +204,7 @@
 				$cols	= $row;
 				// prepare variables //
 				$code_year		= (string) ( (int) substr($cols['D'], -2) + 43);
-				$code			= sprintf('%s-%s%05d', $cols['B'], $code_year, $cols['A']);
+				$code			= sprintf('%s-%d', $cols['B'], $cols['A']);
 				$edit_address	= (int) $cols['BM'];
 
 				$modified		= makeTime( trim( $cols['D'] ) );
