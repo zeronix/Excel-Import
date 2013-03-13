@@ -80,8 +80,8 @@
 	//<editor-fold desc="Database connection">
 	$host		= "localhost";
 	$username	= "root";
-	$password	= "1234";
-	$db_name	= 'work1';
+	$password	= "123456";
+	$db_name	= 'joomla_1.5.26';
 	$prefix		= 'jos' . '_'; // i.e. jos_
 	$mysqli 	= new mysqli($host, $username, $password, $db_name);
 	//</editor-fold>
@@ -208,7 +208,7 @@
 				$edit_address	= (int) $cols['BM'];
 
 				$modified		= makeTime( trim( $cols['D'] ) );
-				$created		= makeTime( trim( $cols['AU'] ) );
+				$created			= makeTime( trim( $cols['AU'] ) );
 				$renew			= makeTime( trim( $cols['AW'] ) );
 				$expire			= makeTime( trim( $cols['AX'] ) );
 				$payment		= makeTime( trim( $cols['AY'] ) );
@@ -384,21 +384,26 @@
 						$query_str					= "SELECT id FROM ".$prefix."dnt_premium p WHERE p.name LIKE '%".$premiumName."%'";
 						$result						= $mysqli->query($query_str)->fetch_object();
 
-						if(!empty($result))
+						/*if(!empty($result))
 							$premiumId				= $result->id;
 						else
 							$premiumId				= 0;
+						*/
+						if(!empty($result)) {
+							
+							$premiumId				= $result->id;
 
-						$params						= array();
-						$params['member_id']		= str_replace("'", '', $vars[0]);
-						$params['subscription_id']	= $subscription_id;
-						$params['premium_id']		= $premiumId;
-						$params['package_id']		= 0;
-						$params['num']				= $premiumNum;
-						$params['shipment_status']	= 1;
-						$params['shipment_date']	= 0;
+							$params							= array();
+							$params['member_id']		= str_replace("'", '', $vars[0]);
+							$params['subscription_id']	= $subscription_id;
+							$params['premium_id']		= $premiumId;
+							$params['package_id']		= 0;
+							$params['num']				= $premiumNum;
+							$params['shipment_status']	= 1;
+							$params['shipment_date']	= 0;
 
-						$members_premium_relations[]	= "('".implode("','", $params)."')";
+							$members_premium_relations[]	= "('".implode("','", $params)."')";
+						}
 					}
 				}
 
